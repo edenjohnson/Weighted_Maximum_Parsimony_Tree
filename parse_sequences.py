@@ -1,8 +1,18 @@
+########################################################################################################################
+# parse_sequence.py
+# Author: Eden Johnson
+# Last Modified: May 9, 2020
+# Program: parse_sequences.py opens up the results generated from BLAST.py and performs an Entrez query on those
+#          top sequences that meet the thresholds established in this program and retrieves their RefSeqIDs and FASTA
+#          sequences. The FASTA sequences are written to a separate file BRCA_family.fasta for input into MSA.py in
+#          order to perform a MSA on the subject sequences with the query sequence of the BRCA2 gene in Homo sapiens.
+########################################################################################################################
+
+
 # Import modules
 from Bio.Blast import NCBIXML
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-import os
 from Bio import SeqIO
 from Bio import Entrez
 
