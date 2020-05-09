@@ -1,8 +1,15 @@
+########################################################################################################################
+# closest_OTU.py
+# Author: Eden Johnson
+# Last Modified: May 9, 2020
+# Program: closest_OTU.py opens up the annotated tree file generated from tree_building.py and uses its information
+#          to return the closest OTU(s) for each OTU.
+########################################################################################################################
+
+# import the required module
 from Bio import Phylo
-import math
 
-from Bio.Phylo.BaseTree import TreeMixin
-
+# open the tree file
 pars_tree = Phylo.read('parsimony_tree.xml', 'phyloxml')
 
 
@@ -15,13 +22,10 @@ def closest_otu(otu):
     smallest_clade = leaf
     for node in non_terminals:
         leaves = node.get_terminals()
-
         leaf_length = len(leaves)
         if leaf_length < min_leaves and otu in str(leaves):
             min_leaves = leaf_length
             smallest_clade = leaves
-
-
     leaf_names = []
     for leaf in smallest_clade:
         if leaf.name != otu:
@@ -29,8 +33,7 @@ def closest_otu(otu):
     return leaf_names
 
 
-
-
+# Results
 print("Returning each OTU's closest OTU(s)")
 
 print("\nDog's closest OTU(s):")
@@ -50,4 +53,3 @@ print(closest_otu("Mouse"))
 
 print("\nChicken's closest OTU(s):")
 print(closest_otu("Chicken"))
-
