@@ -1,3 +1,13 @@
+########################################################################################################################
+# MSA.py
+# Author: Eden Johnson
+# Last Modified: May 9, 2020
+# Program: MSA.py opens up the fasta sequences obtained from parse_sequences.py and performs a MSA on the sequences of
+#          the file. This program uses command line tools of Clustal Omega. Aligned sequences are output to the
+#          BRCA2_family_aligned.fasta file to serve as input for the tree_building.py file.
+# Dependencies: User MUST have the clustal_omega binary file in the same directory as the wmpt_script.py file.
+########################################################################################################################
+
 # Import Clustal Omega wrapper
 from Bio.Align.Applications import ClustalOmegaCommandline
 import os
