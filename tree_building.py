@@ -1,12 +1,20 @@
+########################################################################################################################
+# tree_building.py
+# Author: Eden Johnson
+# Last Modified: May 9, 2020
+# Program: tree_building.py opens up the aligned fasta sequences obtained from MSA.py and constructs a weighted maximum
+#          parsimony tree on the results. File outputs an annotated tree that serves as input for closest_OTU.py to
+#          return the closest OTU(s) for each OTU.
+########################################################################################################################
+
 # Import modules
 from Bio import Phylo
 from Bio.Phylo.TreeConstruction import DistanceCalculator
 from Bio.Phylo.TreeConstruction import DistanceTreeConstructor
 from Bio.Phylo.TreeConstruction import *
-
-
 from Bio import SeqIO
 from Bio.SeqRecord import SeqRecord
+from Bio.Phylo import PhyloXML
 
 
 print("\n\nMSA completed. Computing weighted maximum parsimony tree now....\n")
@@ -47,18 +55,8 @@ output_handle.close()
 from Bio import AlignIO
 AlignIO.convert("BRCA2_family_fixed.fasta", "fasta", "BRCA2_family.phy", "phylip")
 
-
-
 # Read the sequences and align
 aln = AlignIO.read('BRCA2_family.phy', 'phylip')
-
-
-# NM_000059.4 = Human
-# NM_001006653.4 = Dog
-# NM_001009858.1 = Cat
-# NM_031542.2 = Rat
-# NM_001081001.2 = Mouse
-# NM_204276.2 = Chicken
 
 # create a starting tree with NJ
 calculator = DistanceCalculator('identity')
@@ -90,15 +88,10 @@ pars_tree.rooted = False
 print(pars_tree)
 
 
-from Bio.Phylo import PhyloXML
-
 # Promote the basic tree to PhyloXML
 pars_phy = pars_tree.as_phyloxml()
 # Save the annotated phyloXML file
 Phylo.write(pars_phy, 'parsimony_tree.xml', 'phyloxml')
-
-
-
 
 # Draw the phylogenetic tree
 Phylo.draw(pars_tree, branch_labels=lambda c: "%.3f" % (c.branch_length))
@@ -106,4 +99,3 @@ Phylo.draw(pars_tree, branch_labels=lambda c: "%.3f" % (c.branch_length))
 # Print the phylogenetic tree in the terminal
 print('\nPhylogenetic Tree\n===================')
 Phylo.draw_ascii(pars_tree)
-
